@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>组会论文排期表</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body{margin:0; font-family:Inter,system-ui; background:#0b1020; color:#e9edff}
+    .container{max-width:1080px; margin:32px auto; padding:0 16px}
+    .toolbar{display:flex; flex-wrap:wrap; gap:8px; margin:16px 0;}
+    .input{background:#0f1630; border:1px solid #26315b; color:#e9edff; border-radius:8px; padding:8px 12px; flex:1;}
+    .select,.btn{background:#0f1630; border:1px solid #26315b; color:#e9edff; border-radius:8px; padding:8px 12px; cursor:pointer}
+    .btn-primary{background:#4262ff; border-color:#4262ff; color:#fff}
+    .grid{display:grid; grid-template-columns: 2fr 2fr 2fr 2fr 1fr; gap:8px; align-items:center}
+    .head, .row{background:#111733; border:1px solid #26315b; padding:12px; border-radius:12px}
+    .head{font-weight:600; background:#121a3c}
+    .row{display:grid; grid-template-columns:2fr 2fr 2fr 2fr 1fr; gap:8px; align-items:center}
+    .status-upcoming{color:#45c47b} .status-done{color:#9aa4c7} .status-today{color:#80a0ff}
+    .today-row{border:2px solid #4262ff; box-shadow:0 0 6px rgba(66,98,255,.6);}
+    .nav{margin-bottom:16px;}
+    .nav button{margin-right:8px;}
+    .markdown{background:#111733; padding:16px; border-radius:12px; border:1px solid #26315b;}
+    .hint{color:#9aa4c7; font-size:12px; margin:8px 0}
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <div class="nav">
+      <button class="btn" :class="{ 'btn-primary': page==='schedule' }" @click="page='schedule'">排期表</button>
+      <button class="btn" :class="{ 'btn-primary': page==='notes' }" @click="page='notes'">汇报要求</button>
+    </div>
+
+    <div v-if="page==='schedule'">
+      <h2>组会论文排期表</h2>
+      <div class="hint">今天：{{ today }} · 数据源：<span>{{ fromFile ? 'schedule.json（外部文件）' : '内置示例' }}</span></div>
+      <div class="toolbar">
+        <input class="input" v-model.trim="q" placeholder="搜索姓名 / 主题 / 论文题目" />
+        <select class="select" v-model="statusFilter">
+          <option value="">全部</option>
+          <option value="upcoming">未开始</option>
+          <option value="done">已结束</option>
+          <option value="today">今天</option>
+        </select>
+        <button class="btn" @click="showOnlyNext = true">只看最近一次</button>
+        <button class="btn" @click="showOnlyNext = false">显示全部</button>
+        <button class="btn" title="重新读取 schedule.json" @click="fetchSchedule">刷新</button>
+      </div>
+      <div class="grid head">
+        <div>日期</div>
+        <div>汇报人</div>
+        <div>主题</div>
+        <div>分享论文题目</div>
+        <div>状态</div>
+      </div>
+      <div v-for="item in filtered" :key="item.id" class="row" :class="{ 'today-row': item.date===today }">
+        <div>{{ item.date }}<div style="font-size:12px; color:#9aa4c7">{{ item.time||'09:00' }}</div></div>
+        <div>{{ item.speaker }}</div>
+        <div>{{ item.topic || '待定' }}</div>
+        <div>{{ item.paper || '未填写' }}</div>
+        <div :class="statusClass(item)">{{ statusText(item) }}</div>
+      </div>
+      <div v-if="!filtered.length" class="hint">没有匹配的排期。</div>
+    </div>
+
+    <div v-else-if="page==='notes'">
+      <h2>汇报要求与注意事项</h2>
+      <div class="hint">数据源：{{ notesFromFile ? 'notes.md（外部文件）' : '内置 Markdown 示例' }}</div>
+      <div class="markdown" v-html="renderedNotes"></div>
+      <div class="hint">提示：把 <code>notes.md</code> 放到仓库根目录，可被自动读取。</div>
+    </div>
+  </div>
+
+  <script>
+    const todayISO = new Date().toLocaleDateString('en-CA');
+    const app = Vue.createApp({
+      data(){ return { 
+        today: todayISO, q:'', statusFilter:'', page:'schedule', showOnlyNext:false,
+        notesFromFile:false, fromFile:false,
+        notes:`# 汇报要求\n- 每人 30 分钟，包括提问环节。\n- 请提前两天把论文 PDF 和 PPT 发给老师。\n- 汇报时注意突出论文创新点和不足。\n\n# 注意事项\n- 控制时间，不要超时。\n- 尽量图文并茂，避免大段文字。\n- 练习几遍，保证条理清晰。`,
+        raw:[
+          {date:'2025-09-10', time:'09:00', speaker:'张三', topic:'LAP 导读', paper:'《Speculative Prefetching on M1》'},
+          {date:'2025-09-17', time:'09:00', speaker:'李四', topic:'Stride 预取综述', paper:'《A Survey of Stride Prefetchers》'},
+          {date:'2025-09-24', time:'09:00', speaker:'王五', topic:'TLB 侧信道', paper:'《TLB-based Side Channel Attacks》'}
+        ] } },
+      computed:{
+        items(){
+          return this.raw.map((x,i)=>({id:i+1,...x}))
+            .filter(x=>x && x.date && x.speaker)
+            .sort((a,b)=>a.date.localeCompare(b.date));
+        },
+        filtered(){
+          // 基础列表（可切到仅最近一场）
+          let base = this.items;
+          if(this.showOnlyNext){
+            const future = base.filter(it=>it.date>=this.today);
+            base = future.length ? [future[0]] : [];
+          }
+          // 状态过滤
+          if(this.statusFilter==='upcoming') base = base.filter(it=>it.date>this.today);
+          if(this.statusFilter==='done') base = base.filter(it=>it.date<this.today);
+          if(this.statusFilter==='today') base = base.filter(it=>it.date===this.today);
+          // 文本搜索
+          const q=this.q.toLowerCase();
+          if(!q) return base;
+          return base.filter(it=>[it.speaker,it.topic,it.paper].some(v=>(v||'').toLowerCase().includes(q)));
+        },
+        renderedNotes(){ return marked.parse(this.notes); }
+      },
+      methods:{
+        statusClass(it){ if(it.date===this.today) return 'status-today'; return (it.date>this.today)?'status-upcoming':'status-done';},
+        statusText(it){ if(it.date===this.today) return '今天'; return (it.date>this.today)?'未开始':'已结束';},
+        async fetchSchedule(){
+          try{
+            const res = await fetch('schedule.json', { cache: 'no-store' });
+            if(!res.ok) throw new Error(res.statusText);
+            const data = await res.json();
+            if(Array.isArray(data)){
+              this.raw = data;
+              this.fromFile = true;
+            }
+          }catch(e){
+            this.fromFile = false; // 保持内置数据
+          }
+        },
+        async fetchNotes(){
+          try{
+            const res = await fetch('notes.md', { cache: 'no-store' });
+            if(!res.ok) throw new Error(res.statusText);
+            const text = await res.text();
+            if(text && text.trim().length){
+              this.notes = text;
+              this.notesFromFile = true;
+            }
+          }catch(e){
+            this.notesFromFile = false; // 使用内置 notes
+          }
+        }
+      },
+      mounted(){
+        this.fetchSchedule();
+        this.fetchNotes();
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+</html>
