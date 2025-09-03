@@ -13,7 +13,7 @@
 >
 > 示例：
 >
-> ![这是图片](./photo/example.jpg)
+> <img src="./photo/example.jpg" alt="示例" width="420">
 >
 > - 清晰、精炼的介绍能显著提升听众兴趣，即使不打开论文，也能快速理解大意。
 > 
