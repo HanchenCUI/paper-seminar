@@ -70,6 +70,19 @@
       .grid{grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr 1fr}
       .row{grid-template-columns:1.6fr 1.6fr 1.4fr 1.4fr 1fr}
     }
+      /* 让 Markdown 图片随容器自适应缩放（等比例），不放大原图 */
+    .markdown img{
+      display:block;
+      max-width:min(100%, 720px); /* 720 可按需改成 560/480 等 */
+      width:auto;                 /* 只缩小，不拉伸放大 */
+      height:auto;
+      margin:12px auto;           /* 居中显示 */
+      border-radius:8px;
+    }
+    /* 小屏时允许占满容器宽度 */
+    @media (max-width: 560px){
+      .markdown img{ max-width:100%; }
+    }
   </style>
 </head>
 <body>
@@ -124,7 +137,7 @@
 
     <!-- 统计 -->
     <div v-else-if="page==='stats'">
-      <h2 style="margin:0 0 12px 0">论文分享次数统计</h2>
+      <h2 style="margin:0 0 12px 0">统计</h2>
       <!-- <div class="hint">基于已加载的排期数据（来自 <code>schedule.json</code> 或内置示例）。</div> -->
 
       <div class="card" style="margin:12px 0">
@@ -149,8 +162,8 @@
             <div class="td" style="text-align:right; font-weight:700">{{ row.count }}</div>
           </template>
         </div>
-      </div> -->
-    </div>
+      </div>
+    </div> -->
   </div>
 
   <script>
