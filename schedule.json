@@ -3,8 +3,8 @@
     "date": "2025-09-11",
     "time": "14:30",
     "speaker": "黄键树",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "分支预测；操作系统内核攻击",
+    "paper": "《Branch Privilege Injection: Compromising Spectre v2 Hardware Mitigations by Exploiting Branch Predictor Race Conditions》"
   },
   {
     "date": "2025-09-18",
