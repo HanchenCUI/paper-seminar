@@ -31,8 +31,8 @@
     "date": "2025-10-22",
     "time": "18:30",
     "speaker": "刘展豪",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "硬件黑盒 Fuzz",
+    "paper": "《ExfilState: Automated Discovery of Timer-Free Cache Side Channels on ARM CPUs》"
   },
   {
     "date": "2025-10-29",
