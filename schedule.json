@@ -45,8 +45,8 @@
     "date": "2025-11-05",
     "time": "19:00",
     "speaker": "张筱楠",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "-",
+    "paper": "《MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods》"
   },
   {
     "date": "2025-11-12",
