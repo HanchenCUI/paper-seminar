@@ -45,15 +45,15 @@
     "date": "2025-11-05",
     "time": "19:00",
     "speaker": "张筱楠",
-    "topic": "-",
+    "topic": "模型优化",
     "paper": "《MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods》"
   },
   {
     "date": "2025-11-12",
     "time": "19:00",
     "speaker": "崔傲东",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "处理器前端硬件安全攻击",
+    "paper": "《Oxpecker: Leaking Secrets via Fetch Target Queue》"
   },
   {
     "date": "2025-11-19",
