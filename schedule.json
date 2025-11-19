@@ -59,8 +59,8 @@
     "date": "2025-11-19",
     "time": "19:00",
     "speaker": "李嘉源",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "DNA存储；块存储；DNA存储中的数据更新",
+    "paper": "《Efficiently Enabling Block Semantics and Data Updates in DNA Storage》"
   },
   {
     "date": "2025-11-26",
