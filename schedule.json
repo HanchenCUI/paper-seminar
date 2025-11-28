@@ -1,28 +1,28 @@
 [
   {
     "date": "2025-09-11",
-    "time": "19:00",
+    "time": "14:30",
     "speaker": "黄键树",
     "topic": "分支预测；操作系统内核攻击",
     "paper": "《Branch Privilege Injection: Compromising Spectre v2 Hardware Mitigations by Exploiting Branch Predictor Race Conditions》"
   },
   {
     "date": "2025-09-25",
-    "time": "19:00",
+    "time": "14:30",
     "speaker": "梁瑞",
     "topic": "DNA 编码",
     "paper": "《DNA Fountain enables a robust and efficient storage architecture》"
   },
   {
     "date": "2025-10-09",
-    "time": "19:00",
+    "time": "14:30",
     "speaker": "崔佳奇",
     "topic": "分支预测；Spectre 分支历史系列攻击",
     "paper": "《Exploiting Inaccurate Branch History in Side-Channel Attacks》"
   },
   {
     "date": "2025-10-16",
-    "time": "19:00",
+    "time": "14:30",
     "speaker": "张兴言",
     "topic": "DNA 存储技术",
     "paper": "《Managing Reliability Skew in DNA Storage》"
