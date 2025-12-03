@@ -73,8 +73,8 @@
     "date": "2025-12-03",
     "time": "19:00",
     "speaker": "黄键树",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "FPGA 大模型解码加速",
+    "paper": "《SpecMamba: Accelerating Mamba Inference on FPGA with Speculative Decoding》"
   },
   {
     "date": "2025-12-10",
