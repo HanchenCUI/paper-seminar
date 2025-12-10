@@ -80,8 +80,8 @@
     "date": "2025-12-10",
     "time": "19:00",
     "speaker": "崔佳奇",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "推测执行；MTE 攻击",
+    "paper": "《TikTag: Breaking ARM’s Memory Tagging Extension with Speculative Execution》"
   },
   {
     "date": "2025-12-17",
