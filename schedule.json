@@ -92,10 +92,10 @@
   },
   {
     "date": "2025-12-24",
-    "time": "19:00",
+    "time": "18:45",
     "speaker": "刘展豪",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "Cache 结构逆向；隐蔽信道构建",
+    "paper": "《Leaky Buddies: Cross-Component Covert Channels on Integrated CPU-GPU Systems》"
   },
   {
     "date": "2025-12-31",
