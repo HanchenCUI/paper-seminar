@@ -108,13 +108,13 @@
     "date": "2026-01-14",
     "time": "19:00",
     "speaker": "张筱楠",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "模型剪枝优化",
+    "paper": "《A Simple and Effective Pruning Approach for Large Language Models》"
   },
   {
     "date": "2026-01-21",
     "time": "19:00",
-    "speaker": "崔傲东",
+    "speaker": "刘俊麟",
     "topic": "待定",
     "paper": "待定"
   },
