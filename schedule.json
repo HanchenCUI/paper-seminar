@@ -115,8 +115,8 @@
     "date": "2026-01-21",
     "time": "19:00",
     "speaker": "刘俊麟",
-    "topic": "待定",
-    "paper": "待定"
+    "topic": "LLM 模型优化",
+    "paper": "《Make LLM Inference Affordable to Everyone Augmenting GPU Memory with NDP-DIMM》"
   },
   {
     "date": "2026-01-28",
