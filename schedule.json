@@ -1,128 +1,198 @@
 [
-  {
-    "date": "2025-09-11",
-    "time": "14:30",
-    "speaker": "黄键树",
-    "topic": "分支预测；操作系统内核攻击",
-    "paper": "《Branch Privilege Injection: Compromising Spectre v2 Hardware Mitigations by Exploiting Branch Predictor Race Conditions》"
-  },
-  {
-    "date": "2025-09-25",
-    "time": "14:30",
-    "speaker": "梁瑞",
-    "topic": "DNA 编码",
-    "paper": "《DNA Fountain enables a robust and efficient storage architecture》"
-  },
-  {
-    "date": "2025-10-09",
-    "time": "14:30",
-    "speaker": "崔佳奇",
-    "topic": "分支预测；Spectre 分支历史系列攻击",
-    "paper": "《Exploiting Inaccurate Branch History in Side-Channel Attacks》"
-  },
-  {
-    "date": "2025-10-16",
-    "time": "14:30",
-    "speaker": "张兴言",
-    "topic": "DNA 存储技术",
-    "paper": "《Managing Reliability Skew in DNA Storage》"
-  },
-  {
-    "date": "2025-10-22",
-    "time": "19:00",
-    "speaker": "刘展豪",
-    "topic": "硬件黑盒 Fuzz",
-    "paper": "《ExfilState: Automated Discovery of Timer-Free Cache Side Channels on ARM CPUs》"
-  },
-  {
-    "date": "2025-10-29",
-    "time": "19:00",
-    "speaker": "张贺",
-    "topic": "图像编码；存储机制；协同设计",
-    "paper": "《High-Density Image Storage Using Approximate Memory Cells》"
-  },
-  {
-    "date": "2025-11-05",
-    "time": "19:00",
-    "speaker": "张筱楠",
-    "topic": "模型优化",
-    "paper": "《MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods》"
-  },
-  {
-    "date": "2025-11-12",
-    "time": "19:00",
-    "speaker": "崔傲东",
-    "topic": "处理器前端硬件安全攻击",
-    "paper": "《Oxpecker: Leaking Secrets via Fetch Target Queue》"
-  },
-  {
-    "date": "2025-11-19",
-    "time": "19:00",
-    "speaker": "李嘉源",
-    "topic": "DNA存储；块存储；DNA存储中的数据更新",
-    "paper": "《Efficiently Enabling Block Semantics and Data Updates in DNA Storage》"
-  },
-  {
-    "date": "2025-11-26",
-    "time": "19:00",
-    "speaker": "梁瑞",
-    "topic": "DNA阴阳码",
-    "paper": "《Towards practical and robust DNA-based data archiving using the yin–yang codec system》"
-  },
-  {
-    "date": "2025-12-03",
-    "time": "19:00",
-    "speaker": "黄键树",
-    "topic": "FPGA 大模型解码加速",
-    "paper": "《SpecMamba: Accelerating Mamba Inference on FPGA with Speculative Decoding》"
-  },
-  {
-    "date": "2025-12-10",
-    "time": "19:00",
-    "speaker": "崔佳奇",
-    "topic": "推测执行；MTE 攻击",
-    "paper": "《TikTag: Breaking ARM’s Memory Tagging Extension with Speculative Execution》"
-  },
-  {
-    "date": "2025-12-17",
-    "time": "19:00",
-    "speaker": "张兴言",
-    "topic": "DNA 存储技术",
-    "paper": "《Composite Hedges Nanopores: Codec System for Rapid and Portable DNA Data Readout with High INDEL-Correction》"
-  },
-  {
-    "date": "2025-12-24",
-    "time": "18:45",
-    "speaker": "刘展豪",
-    "topic": "Cache 结构逆向；隐蔽信道构建",
-    "paper": "《Leaky Buddies: Cross-Component Covert Channels on Integrated CPU-GPU Systems》"
-  },
-  {
-    "date": "2026-01-07",
-    "time": "19:00",
-    "speaker": "张贺",
-    "topic": "JPEG 图像编码",
-    "paper": "《Bitstream-Corrupted JPEG Images Are Restorable: Two-Stage Compensation and Alignment Framework for Image Restoration》"
-  },
-  {
-    "date": "2026-01-14",
-    "time": "19:00",
-    "speaker": "张筱楠",
-    "topic": "模型剪枝优化",
-    "paper": "《A Simple and Effective Pruning Approach for Large Language Models》"
-  },
-  {
-    "date": "2026-01-21",
-    "time": "19:00",
-    "speaker": "刘俊麟",
-    "topic": "LLM 模型优化",
-    "paper": "《Make LLM Inference Affordable to Everyone Augmenting GPU Memory with NDP-DIMM》"
-  },
-  {
-    "date": "2026 春季开学后",
-    "time": "待安排",
-    "speaker": "李嘉源",
-    "topic": "待定",
-    "paper": "待定"
-  }
+    {
+        "date": "2025-09-11",
+        "time": "14:30",
+        "speaker": "黄键树",
+        "topic": "分支预测；操作系统内核攻击",
+        "paper": "《Branch Privilege Injection: Compromising Spectre v2 Hardware Mitigations by Exploiting Branch Predictor Race Conditions》"
+    },
+    {
+        "date": "2025-09-25",
+        "time": "14:30",
+        "speaker": "梁瑞",
+        "topic": "DNA 编码",
+        "paper": "《DNA Fountain enables a robust and efficient storage architecture》"
+    },
+    {
+        "date": "2025-10-09",
+        "time": "14:30",
+        "speaker": "崔佳奇",
+        "topic": "分支预测；Spectre 分支历史系列攻击",
+        "paper": "《Exploiting Inaccurate Branch History in Side-Channel Attacks》"
+    },
+    {
+        "date": "2025-10-16",
+        "time": "14:30",
+        "speaker": "张兴言",
+        "topic": "DNA 存储技术",
+        "paper": "《Managing Reliability Skew in DNA Storage》"
+    },
+    {
+        "date": "2025-10-22",
+        "time": "19:00",
+        "speaker": "刘展豪",
+        "topic": "硬件黑盒 Fuzz",
+        "paper": "《ExfilState: Automated Discovery of Timer-Free Cache Side Channels on ARM CPUs》"
+    },
+    {
+        "date": "2025-10-29",
+        "time": "19:00",
+        "speaker": "张贺",
+        "topic": "图像编码；存储机制；协同设计",
+        "paper": "《High-Density Image Storage Using Approximate Memory Cells》"
+    },
+    {
+        "date": "2025-11-05",
+        "time": "19:00",
+        "speaker": "张筱楠",
+        "topic": "模型优化",
+        "paper": "《MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods》"
+    },
+    {
+        "date": "2025-11-12",
+        "time": "19:00",
+        "speaker": "崔傲东",
+        "topic": "处理器前端硬件安全攻击",
+        "paper": "《Oxpecker: Leaking Secrets via Fetch Target Queue》"
+    },
+    {
+        "date": "2025-11-19",
+        "time": "19:00",
+        "speaker": "李嘉源",
+        "topic": "DNA存储；块存储；DNA存储中的数据更新",
+        "paper": "《Efficiently Enabling Block Semantics and Data Updates in DNA Storage》"
+    },
+    {
+        "date": "2025-11-26",
+        "time": "19:00",
+        "speaker": "梁瑞",
+        "topic": "DNA阴阳码",
+        "paper": "《Towards practical and robust DNA-based data archiving using the yin–yang codec system》"
+    },
+    {
+        "date": "2025-12-03",
+        "time": "19:00",
+        "speaker": "黄键树",
+        "topic": "FPGA 大模型解码加速",
+        "paper": "《SpecMamba: Accelerating Mamba Inference on FPGA with Speculative Decoding》"
+    },
+    {
+        "date": "2025-12-10",
+        "time": "19:00",
+        "speaker": "崔佳奇",
+        "topic": "推测执行；MTE 攻击",
+        "paper": "《TikTag: Breaking ARM’s Memory Tagging Extension with Speculative Execution》"
+    },
+    {
+        "date": "2025-12-17",
+        "time": "19:00",
+        "speaker": "张兴言",
+        "topic": "DNA 存储技术",
+        "paper": "《Composite Hedges Nanopores: Codec System for Rapid and Portable DNA Data Readout with High INDEL-Correction》"
+    },
+    {
+        "date": "2025-12-24",
+        "time": "18:45",
+        "speaker": "刘展豪",
+        "topic": "Cache 结构逆向；隐蔽信道构建",
+        "paper": "《Leaky Buddies: Cross-Component Covert Channels on Integrated CPU-GPU Systems》"
+    },
+    {
+        "date": "2026-01-07",
+        "time": "19:00",
+        "speaker": "张贺",
+        "topic": "JPEG 图像编码",
+        "paper": "《Bitstream-Corrupted JPEG Images Are Restorable: Two-Stage Compensation and Alignment Framework for Image Restoration》"
+    },
+    {
+        "date": "2026-01-14",
+        "time": "19:00",
+        "speaker": "张筱楠",
+        "topic": "模型剪枝优化",
+        "paper": "《A Simple and Effective Pruning Approach for Large Language Models》"
+    },
+    {
+        "date": "2026-01-21",
+        "time": "19:00",
+        "speaker": "刘俊麟",
+        "topic": "LLM 模型优化",
+        "paper": "《Make LLM Inference Affordable to Everyone Augmenting GPU Memory with NDP-DIMM》"
+    },
+    {
+        "date": "2026-03-18",
+        "time": "19:00",
+        "speaker": "崔佳奇",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-03-25",
+        "time": "19:00",
+        "speaker": "李嘉源",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-04-01",
+        "time": "19:00",
+        "speaker": "崔傲东",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-04-08",
+        "time": "19:00",
+        "speaker": "黄键树",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-04-15",
+        "time": "19:00",
+        "speaker": "梁瑞",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-04-22",
+        "time": "19:00",
+        "speaker": "张兴言",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-04-29",
+        "time": "19:00",
+        "speaker": "刘展豪",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-05-06",
+        "time": "19:00",
+        "speaker": "张贺",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-05-13",
+        "time": "19:00",
+        "speaker": "张筱楠",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-05-20",
+        "time": "19:00",
+        "speaker": "刘俊麟",
+        "topic": "待定",
+        "paper": "待定"
+    },
+    {
+        "date": "2026-05-27",
+        "time": "19:00",
+        "speaker": "李嘉源",
+        "topic": "待定",
+        "paper": "待定"
+    }
 ]
