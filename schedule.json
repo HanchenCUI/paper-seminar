@@ -122,8 +122,8 @@
         "date": "2026-03-25",
         "time": "19:00",
         "speaker": "崔佳奇",
-        "topic": "待定",
-        "paper": "待定"
+        "topic": "GPU 硬件安全",
+        "paper": "《Spy in the GPU-box: Covert and Side Channel Attacks on Multi-GPU System》"
     },
     {
         "date": "2026-04-01",
