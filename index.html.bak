@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>论文研讨会排期表</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* ===== 颜色主题：天蓝色 · 黑色 · 白色 ===== */
+    :root {
+      --sky-50: #f2f9ff;
+      /* 很浅的天蓝，作为背景衬底 */
+      --sky-100: #e6f3ff;
+      --sky-200: #cfe9ff;
+      /* 边框/填充 */
+      --sky-300: #aeddff;
+      --sky-400: #72c6ff;
+      /* 主要高亮（按钮/描边）*/
+      --sky-500: #2fb2ff;
+      /* 主要按钮 */
+      --sky-600: #0a8fe6;
+      /* 悬停/强调 */
+      --ink: #0b0f19;
+      /* 黑色文字 */
+      --muted: #5b677a;
+      /* 次要文字 */
+      --paper: #ffffff;
+      /* 白色卡片 */
+      --border: #d8e8f7;
+      /* 卡片边框 */
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: linear-gradient(180deg, var(--sky-50), #fff 60%);
+      color: var(--ink)
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 32px auto;
+      padding: 0 16px
+    }
+
+    /* 顶部导航 */
+    .nav {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 8px
+    }
+
+    /* 输入/按钮/选择 */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .input {
+      background: #fff;
+      border: 1px solid var(--sky-200);
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 10px 12px;
+      flex: 1;
+      outline: none
+    }
+
+    .input:focus {
+      border-color: var(--sky-400);
+      box-shadow: 0 0 0 3px rgba(47, 178, 255, .18)
+    }
+
+    .select,
+    .btn {
+      background: #fff;
+      border: 1px solid var(--sky-200);
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer
+    }
+
+    .btn:hover,
+    .select:focus {
+      border-color: var(--sky-400);
+      box-shadow: 0 0 0 3px rgba(47, 178, 255, .14)
+    }
+
+    .btn-primary {
+      background: var(--sky-500);
+      border-color: var(--sky-500);
+      color: #fff
+    }
+
+    .btn-primary:hover {
+      background: var(--sky-600);
+      border-color: var(--sky-600)
+    }
+
+    /* 表格栅格 */
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 2fr 2fr 2fr 1fr;
+      gap: 10px;
+      align-items: center
+    }
+
+    .head,
+    .row {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 14px
+    }
+
+    .head {
+      font-weight: 700;
+      color: #0b0f19;
+      background: linear-gradient(180deg, #ffffff, var(--sky-100));
+      border-color: var(--sky-200)
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 2fr 2fr 2fr 2fr 1fr;
+      gap: 10px;
+      align-items: center
+    }
+
+    .row:hover {
+      box-shadow: 0 4px 14px rgba(10, 143, 230, .08)
+    }
+
+    /* 状态颜色 */
+    .status-upcoming {
+      color: var(--sky-600);
+      font-weight: 600
+    }
+
+    .status-done {
+      color: var(--muted)
+    }
+
+    .status-today {
+      color: #111
+    }
+
+    /* 今日高亮 */
+    .today-row {
+      border: 2px solid var(--sky-400);
+      box-shadow: 0 0 0 4px rgba(47, 178, 255, .15)
+    }
+
+    /* Markdown / 卡片 */
+    .markdown,
+    .card {
+      background: var(--paper);
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border)
+    }
+
+    .markdown h1,
+    .markdown h2 {
+      color: #0b0f19
+    }
+
+    .markdown code {
+      background: var(--sky-100);
+      padding: .2em .4em;
+      border-radius: 6px
+    }
+
+    /* 次要文本 */
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 8px 0
+    }
+
+    /* 统计表 */
+    .tbl {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center
+    }
+
+    .th {
+      font-weight: 700;
+      background: linear-gradient(180deg, #fff, var(--sky-100));
+      border: 1px solid var(--sky-200);
+      padding: 10px;
+      border-radius: 10px
+    }
+
+    .td {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 10px
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1.6fr 1.6fr 1.4fr 1.4fr 1fr
+      }
+
+      .row {
+        grid-template-columns: 1.6fr 1.6fr 1.4fr 1.4fr 1fr
+      }
+    }
+
+    /* 让 Markdown 图片随容器自适应缩放（等比例），不放大原图 */
+    .markdown img {
+      display: block;
+      max-width: min(100%, 720px);
+      /* 720 可按需改成 560/480 等 */
+      width: auto;
+      /* 只缩小，不拉伸放大 */
+      height: auto;
+      margin: 12px auto;
+      /* 居中显示 */
+      border-radius: 8px;
+    }
+
+    /* 小屏时允许占满容器宽度 */
+    @media (max-width: 560px) {
+      .markdown img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container">
+    <div class="nav">
+      <button class="btn" :class="{ 'btn-primary': page==='schedule' }" @click="page='schedule'">排期表</button>
+      <button class="btn" :class="{ 'btn-primary': page==='notes' }" @click="page='notes'">汇报要求</button>
+      <button class="btn" :class="{ 'btn-primary': page==='stats' }" @click="page='stats'">统计</button>
+    </div>
+
+    <!-- 排期表 -->
+    <div v-if="page==='schedule'">
+      <h2 style="margin:0 0 6px 0">论文讨论会排期表</h2>
+      <div class="hint">今天：{{ today }}</div>
+      <div class="toolbar">
+        <input class="input" v-model.trim="q" placeholder="搜索姓名 / 主题 / 论文题目" />
+        <select class="select" v-model="statusFilter">
+          <option value="">全部</option>
+          <option value="upcoming">未开始</option>
+          <option value="done">已结束</option>
+          <option value="today">今天</option>
+        </select>
+        <button class="btn" @click="showOnlyNext = true">只看最近一次</button>
+        <button class="btn" @click="showOnlyNext = false">显示全部</button>
+        <button class="btn" title="重新读取 schedule.json" @click="fetchSchedule">刷新</button>
+      </div>
+      <div class="grid head">
+        <div>日期</div>
+        <div>汇报人</div>
+        <div>主题</div>
+        <div>分享论文题目</div>
+        <div>状态</div>
+      </div>
+      <div v-for="item in filtered" :key="item.id" class="row" :class="{ 'today-row': item.date===today }">
+        <div>
+          <div style="font-weight:600">{{ item.date }}</div>
+          <div class="hint" style="margin:2px 0 0 0">{{ item.time||'09:00' }}</div>
+        </div>
+        <div>{{ item.speaker }}</div>
+        <div>{{ item.topic || '待定' }}</div>
+        <div>{{ item.paper || '未填写' }}</div>
+        <div :class="statusClass(item)">{{ statusText(item) }}</div>
+      </div>
+      <div v-if="!filtered.length" class="hint">没有匹配的排期。</div>
+    </div>
+
+    <!-- 汇报要求 -->
+    <div v-else-if="page==='notes'">
+      <h2>汇报要求与注意事项</h2>
+      <div class="markdown" v-html="renderedNotes"></div>
+    </div>
+
+    <!-- 统计 -->
+    <div v-else-if="page==='stats'">
+      <h2 style="margin:0 0 12px 0">统计</h2>
+      <!-- <div class="hint">基于已加载的排期数据（来自 <code>schedule.json</code> 或内置示例）。</div> -->
+
+      <div class="card" style="margin:12px 0">
+        <div style="font-weight:700; margin-bottom:8px">全部数据 · 共 {{ totalAll }} 场</div>
+        <div class="tbl" style="margin-top:8px">
+          <div class="th">姓名</div>
+          <div class="th" style="text-align:right">次数</div>
+          <template v-for="row in countsAll" :key="row.name + '-all'">
+            <div class="td">{{ row.name }}</div>
+            <div class="td" style="text-align:right; font-weight:700">{{ row.count }}</div>
+          </template>
+        </div>
+      </div>
+
+      <!-- <div class="card" style="margin:12px 0">
+        <div style="font-weight:700; margin-bottom:8px">当前视图（搜索/过滤后）· 共 {{ totalCurrent }} 场</div>
+        <div class="tbl" style="margin-top:8px">
+          <div class="th">姓名</div>
+          <div class="th" style="text-align:right">次数</div>
+          <template v-for="row in countsCurrent" :key="row.name + '-current'">
+            <div class="td">{{ row.name }}</div>
+            <div class="td" style="text-align:right; font-weight:700">{{ row.count }}</div>
+          </template>
+        </div>
+      </div>
+    </div> -->
+    </div>
+
+    <script>
+      const todayISO = new Date().toLocaleDateString('en-CA');
+      const app = Vue.createApp({
+        data() {
+          return {
+            today: todayISO, q: '', statusFilter: '', page: 'schedule', showOnlyNext: false,
+            notesFromFile: false, fromFile: false,
+            notes: `# 汇报要求\n- 每人 30 分钟，包括提问环节。\n- 请提前两天把论文 PDF 和 PPT 发给老师。\n- 汇报时注意突出论文创新点和不足。\n\n# 注意事项\n- 控制时间，不要超时。\n- 尽量图文并茂，避免大段文字。\n- 练习几遍，保证条理清晰。`,
+            raw: [
+              { date: '2025-09-10', time: '09:00', speaker: '张三', topic: 'LAP 导读', paper: '《Speculative Prefetching on M1》' },
+              { date: '2025-09-17', time: '09:00', speaker: '李四', topic: 'Stride 预取综述', paper: '《A Survey of Stride Prefetchers》' },
+              { date: '2025-09-24', time: '09:00', speaker: '王五', topic: 'TLB 侧信道', paper: '《TLB-based Side Channel Attacks》' }
+            ]
+          }
+        },
+        computed: {
+          items() {
+            return this.raw.map((x, i) => ({ id: i + 1, ...x }))
+              .filter(x => x && x.date && x.speaker)
+              .sort((a, b) => a.date.localeCompare(b.date));
+          },
+          filtered() {
+            let base = this.items;
+
+            // 保持原有逻辑：只看最近一次
+            if (this.showOnlyNext) {
+              const future = base.filter(it => it.date >= this.today);
+              base = future.length ? [future[0]] : [];
+            }
+
+            // 保持原有逻辑：状态筛选
+            if (this.statusFilter === 'upcoming') base = base.filter(it => it.date > this.today);
+            if (this.statusFilter === 'done') base = base.filter(it => it.date < this.today);
+            if (this.statusFilter === 'today') base = base.filter(it => it.date === this.today);
+
+            // 保持原有逻辑：关键词搜索
+            const q = this.q.toLowerCase();
+            let result = base;
+            if (q) {
+              result = base.filter(it =>
+                [it.speaker, it.topic, it.paper]
+                  .some(v => (v || '').toLowerCase().includes(q))
+              );
+            }
+
+            // ★ 新增排序逻辑：
+            // 未开始（含今天及将来）排前面，已结束排后面，
+            // 同一类内部按日期从早到晚
+            return result.slice().sort((a, b) => {
+              const wa = a.date >= this.today ? 0 : 1; // 0: 未开始(含今天/未来)  1: 已结束
+              const wb = b.date >= this.today ? 0 : 1;
+              if (wa !== wb) return wa - wb;
+              return a.date.localeCompare(b.date);
+            });
+          },
+          renderedNotes() { return marked.parse(this.notes); },
+          /* 统计 */
+          countsAll() { return this.groupCounts(this.items); },
+          countsCurrent() { return this.groupCounts(this.filtered); },
+          totalAll() { return this.items.length; },
+          totalCurrent() { return this.filtered.length; }
+        },
+        methods: {
+          statusClass(it) { if (it.date === this.today) return 'status-today'; return (it.date > this.today) ? 'status-upcoming' : 'status-done'; },
+          statusText(it) { if (it.date === this.today) return '今天'; return (it.date > this.today) ? '未开始' : '已结束'; },
+          async fetchSchedule() {
+            try {
+              const res = await fetch('schedule.json', { cache: 'no-store' });
+              if (!res.ok) throw new Error(res.statusText);
+              const data = await res.json();
+              if (Array.isArray(data)) {
+                this.raw = data;
+                this.fromFile = true;
+              }
+            } catch (e) { this.fromFile = false; }
+          },
+          async fetchNotes() {
+            try {
+              const res = await fetch('notes.md', { cache: 'no-store' });
+              if (!res.ok) throw new Error(res.statusText);
+              const text = await res.text();
+              if (text && text.trim().length) { this.notes = text; this.notesFromFile = true; }
+            } catch (e) { this.notesFromFile = false; }
+          },
+          groupCounts(list) {
+            const map = new Map();
+            for (const it of list) {
+              const name = (it.speaker || '未命名').trim();
+              map.set(name, (map.get(name) || 0) + 1);
+            }
+            return Array.from(map.entries())
+              .map(([name, count]) => ({ name, count }))
+              .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh'));
+          }
+        },
+        mounted() { this.fetchSchedule(); this.fetchNotes(); }
+      });
+      app.mount('#app');
+    </script>
+</body>
+
+</html>
